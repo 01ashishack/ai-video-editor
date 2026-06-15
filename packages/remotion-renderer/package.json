@@ -1,0 +1,32 @@
+{
+  "name": "@ai-documentary-editor/remotion-renderer",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Renderer-facing Remotion adapter boundary for AI Documentary Editor.",
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "smoke:render": "tsx src/smoke/real-render-smoke.ts",
+    "typecheck": "tsc -b",
+    "verify:render": "tsx src/verification/render-verification.ts"
+  },
+  "dependencies": {
+    "@remotion/bundler": "4.0.477",
+    "@remotion/player": "4.0.477",
+    "@remotion/renderer": "4.0.477",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "remotion": "4.0.477"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0"
+  }
+}

@@ -1,0 +1,33 @@
+node_modules/
+dist/
+build/
+coverage/
+.vitest/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# Environment and local machine state
+.env
+.env.*
+!.env.example
+
+# Temporary outputs
+tmp/
+temp/
+*.tmp
+
+# Generated Phase 0 artifacts
+command-log.jsonl
+project.json
+rebuilt.project.json
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

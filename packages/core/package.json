@@ -1,0 +1,19 @@
+{
+  "name": "@aide/core",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Core models and foundation logic for AI Documentary Editor.",
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -b"
+  }
+}
