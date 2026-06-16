@@ -10,8 +10,8 @@ import {
 } from "@aide/core";
 import { mkdir, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { basename, dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { resolveRendererComposition } from "../assets/index.js";
 import { createRendererComposition } from "../render-plan-adapter.js";
 
@@ -41,18 +41,23 @@ export async function runRealRenderSmokeTest(
     recursive: true
   });
 
-  const imagePath = join(workingDirectory, "smoke-image.png");
-  const audioPath = join(workingDirectory, "smoke-audio.wav");
   const outputPath =
     options.outputPath ?? join(workingDirectory, "smoke-output.mp4");
+  const publicDirectory = dirname(outputPath);
+  const imagePath = join(publicDirectory, "smoke-image.png");
+  const audioPath = join(publicDirectory, "smoke-audio.wav");
+
+  await mkdir(publicDirectory, {
+    recursive: true
+  });
 
   await writeFile(imagePath, createSmokePng());
   await writeFile(audioPath, createSmokeWav());
 
   const project = createSmokeProject({
     createdAt: options.createdAt ?? DEFAULT_CREATED_AT,
-    imageUri: pathToFileURL(resolve(imagePath)).href,
-    audioUri: pathToFileURL(resolve(audioPath)).href
+    imageUri: toPublicAssetPath(imagePath),
+    audioUri: toPublicAssetPath(audioPath)
   });
 
   const remotionComposition = buildRemotionComposition(project, {
@@ -239,6 +244,10 @@ function createSmokeProject(options: {
       tracks
     }
   };
+}
+
+function toPublicAssetPath(path: string): string {
+  return `/public/${basename(path).replaceAll("\\", "/")}`;
 }
 
 function createSmokePng(): Buffer {

@@ -1,0 +1,22 @@
+{
+  "name": "@aide/ai-command-interpreter",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Deterministic editing intent foundation for AI-assisted command interpretation.",
+  "type": "module",
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@aide/core": "0.0.0"
+  }
+}

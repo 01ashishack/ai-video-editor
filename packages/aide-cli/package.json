@@ -1,0 +1,29 @@
+{
+  "name": "@aide/cli",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Command line interface foundation for AIDE.",
+  "type": "module",
+  "bin": {
+    "aide": "./build/index.js"
+  },
+  "main": "./build/index.js",
+  "types": "./build/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "default": "./build/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@aide/ai-command-interpreter": "0.0.0",
+    "@aide/core": "0.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0"
+  }
+}

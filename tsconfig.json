@@ -5,7 +5,13 @@
       "path": "./packages/core"
     },
     {
+      "path": "./packages/ai-command-interpreter"
+    },
+    {
       "path": "./packages/remotion-renderer"
+    },
+    {
+      "path": "./packages/aide-cli"
     }
   ],
   "compilerOptions": {
