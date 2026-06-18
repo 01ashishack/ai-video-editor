@@ -3,14 +3,19 @@ import { createInterface, type Interface } from "node:readline/promises";
 import { deserializeProject, serializeProject } from "@aide/core";
 import { editProject } from "@aide/ai-command-interpreter";
 import { runChatSession } from "./chat.js";
+import { runOpenAIValidationCommand } from "./openai-validate.js";
+import { showProjectFile } from "./project-viewer.js";
+import { showTimelineFile } from "./timeline-visualizer.js";
 
 export interface AideCliEnvironment {
   readTextFile(path: string): Promise<string>;
   writeTextFile(path: string, content: string): Promise<void>;
   stdout(message: string): void;
   stderr(message: string): void;
+  getEnv?(name: string): string | undefined;
   readLine?(prompt: string): Promise<string | undefined>;
   close?(): void;
+  validateOpenAI?(): Promise<number>;
 }
 
 export async function runAideCli(
@@ -24,6 +29,12 @@ export async function runAideCli(
       return runEditCommand(commandArgs, environment);
     case "chat":
       return runChatCommand(commandArgs, environment);
+    case "show":
+      return runShowCommand(commandArgs, environment);
+    case "timeline":
+      return runTimelineCommand(commandArgs, environment);
+    case "validate-openai":
+      return runValidateOpenAICommand(environment);
     case "preview":
       environment.stdout("aide preview is not implemented yet.\n");
       return 0;
@@ -51,6 +62,7 @@ function createNodeEnvironment(): AideCliEnvironment {
     stderr: (message) => {
       process.stderr.write(message);
     },
+    getEnv: (name) => process.env[name],
     readLine: async (prompt) => {
       readlineInterface ??= createInterface({
         input: process.stdin,
@@ -89,6 +101,38 @@ async function runEditCommand(
   );
 
   return 0;
+}
+
+async function runValidateOpenAICommand(
+  environment: AideCliEnvironment
+): Promise<number> {
+  if (environment.validateOpenAI) {
+    return environment.validateOpenAI();
+  }
+
+  return runOpenAIValidationCommand({
+    stdout: environment.stdout,
+    stderr: environment.stderr,
+    getEnv: environment.getEnv ?? ((name) => process.env[name])
+  });
+}
+
+async function runShowCommand(
+  args: readonly string[],
+  environment: AideCliEnvironment
+): Promise<number> {
+  const [projectFile] = args;
+
+  return showProjectFile(projectFile ?? "", environment);
+}
+
+async function runTimelineCommand(
+  args: readonly string[],
+  environment: AideCliEnvironment
+): Promise<number> {
+  const [projectFile] = args;
+
+  return showTimelineFile(projectFile ?? "", environment);
 }
 
 async function runChatCommand(
@@ -145,6 +189,9 @@ function createUsage(): string {
     "Usage:",
     "  aide edit <project-file> \"<request>\"",
     "  aide chat <project-file>",
+    "  aide show <project-file>",
+    "  aide timeline <project-file>",
+    "  aide validate-openai",
     "  aide preview",
     "  aide render"
   ].join("\n");

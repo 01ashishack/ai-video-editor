@@ -142,6 +142,25 @@ describe("aide cli", () => {
     expect(errors).toEqual([]);
   });
 
+  it("wires the OpenAI validation command", async () => {
+    const output: string[] = [];
+    const errors: string[] = [];
+    const exitCode = await runAideCli(
+      ["validate-openai"],
+      {
+        ...createTestEnvironment(new Map(), output, errors),
+        validateOpenAI: async () => {
+          output.push("validation called\n");
+          return 0;
+        }
+      }
+    );
+
+    expect(exitCode).toBe(0);
+    expect(output).toEqual(["validation called\n"]);
+    expect(errors).toEqual([]);
+  });
+
   it("reports unknown commands", async () => {
     const output: string[] = [];
     const errors: string[] = [];

@@ -12,6 +12,9 @@
     },
     {
       "path": "./packages/aide-cli"
+    },
+    {
+      "path": "./packages/aide-desktop"
     }
   ],
   "compilerOptions": {

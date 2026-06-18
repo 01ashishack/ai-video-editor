@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "rootDir": "src",
+    "outDir": "build",
+    "tsBuildInfoFile": "./build/tsconfig.tsbuildinfo",
+    "baseUrl": ".",
+    "paths": {
+      "@aide/core": [
+        "./src/core-shim.d.ts"
+      ],
+      "@aide/ai-command-interpreter": [
+        "./src/core-shim.d.ts"
+      ],
+      "@ai-documentary-editor/remotion-renderer": [
+        "./src/core-shim.d.ts"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.ts"
+  ]
+}

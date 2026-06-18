@@ -19,6 +19,16 @@ declare module "@aide/ai-command-interpreter" {
     payload: Record<string, unknown>;
   }
 
+  export interface LLMProvider {
+    generate(request: { prompt: string }): Promise<{ content: string }>;
+  }
+
+  export interface IntentConfidenceResult {
+    confidence: number;
+    ambiguityReasons: readonly string[];
+    requiresClarification: boolean;
+  }
+
   export interface ConversationContext {
     lastIntent?: EditingIntent;
     lastResolvedIntent?: ResolvedIntent;
@@ -35,6 +45,22 @@ declare module "@aide/ai-command-interpreter" {
     };
     project: Project;
     rollbackSnapshot?: ProjectSnapshot;
+  }
+
+  export interface AIEditingSessionResult {
+    intents: EditingIntent[];
+    resolvedIntents: ResolvedIntent[];
+    plannedCommands: PlannedCommand[];
+    dryRun: {
+      commands?: readonly PlannedCommand[];
+      summary: readonly string[];
+      commandCount?: number;
+    };
+    executionResult: {
+      project: Project;
+      executedCommandCount: number;
+    };
+    project: Project;
   }
 
   export interface EditProjectInput {
@@ -57,6 +83,21 @@ declare module "@aide/ai-command-interpreter" {
   export function editProject(
     input: EditProjectInput
   ): Promise<EditProjectResult>;
+
+  export class OpenAIProvider implements LLMProvider {
+    constructor(options: { apiKey: string; model: string });
+    generate(request: { prompt: string }): Promise<{ content: string }>;
+  }
+
+  export function runAIEditingSession(
+    project: Project,
+    request: string,
+    provider?: LLMProvider
+  ): Promise<AIEditingSessionResult>;
+
+  export function analyzeIntentConfidence(
+    intent: unknown
+  ): IntentConfidenceResult;
 
   export function resolveContextReference(
     context: ConversationContext,

@@ -9,6 +9,9 @@ export default defineConfig({
       ),
       "@aide/ai-command-interpreter": fileURLToPath(
         new URL("./packages/ai-command-interpreter/src/index.ts", import.meta.url)
+      ),
+      "@ai-documentary-editor/remotion-renderer": fileURLToPath(
+        new URL("./packages/remotion-renderer/src/index.ts", import.meta.url)
       )
     }
   },

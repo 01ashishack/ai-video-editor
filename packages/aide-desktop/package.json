@@ -1,0 +1,30 @@
+{
+  "name": "@aide/desktop",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Electron desktop shell foundation for AIDE.",
+  "type": "module",
+  "main": "./build/main.js",
+  "types": "./build/main.d.ts",
+  "exports": {
+    ".": {
+      "types": "./build/main.d.ts",
+      "default": "./build/main.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "npm run build && electron ./build/main.js",
+    "start": "electron ./build/main.js",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@aide/ai-command-interpreter": "0.0.0",
+    "@aide/core": "0.0.0",
+    "@ai-documentary-editor/remotion-renderer": "0.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "electron": "^31.0.0"
+  }
+}

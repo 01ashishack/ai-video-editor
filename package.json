@@ -10,7 +10,7 @@
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc -p packages/core/tsconfig.json --noEmit --composite false --incremental false && tsc -p packages/remotion-renderer/tsconfig.json --noEmit --composite false --incremental false --rootDir . && tsc -p packages/ai-command-interpreter/tsconfig.json --noEmit --composite false --incremental false && tsc -p packages/aide-cli/tsconfig.json --noEmit --composite false --incremental false",
+    "typecheck": "tsc -p packages/core/tsconfig.json --noEmit --composite false --incremental false && tsc -p packages/remotion-renderer/tsconfig.json --noEmit --composite false --incremental false --rootDir . && tsc -p packages/ai-command-interpreter/tsconfig.json --noEmit --composite false --incremental false && tsc -p packages/aide-cli/tsconfig.json --noEmit --composite false --incremental false && tsc -p packages/aide-desktop/tsconfig.json --noEmit --composite false --incremental false",
     "build": "tsc -b"
   },
   "dependencies": {
